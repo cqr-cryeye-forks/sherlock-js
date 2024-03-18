@@ -5,6 +5,7 @@
 	const readline = require('readline');
 	const chalk = require('chalk');
 	const {fork} = require('child_process');
+	const fs = require('fs');
 
 	const services = require(path.join(__dirname, 'services.json'));
 
@@ -20,6 +21,7 @@
 		'--help': Boolean,
 		'--version': Boolean,
 		'--name': String,
+		'--output': String,
 		'--only-found': Boolean,
 		'--json': Boolean,
 		'--csv': Boolean,
@@ -35,6 +37,15 @@
 	process.on('beforeExit', code => {
 		if (code === 0 && args['--json'] && global.finalResults) {
 			log(JSON.stringify(global.finalResults));
+		}
+		if (code === 0 && args['--output'] && global.finalResults) {
+			fs.writeFile(args['--output'], JSON.stringify(global.finalResults), (err) => {
+				if (err) {
+					console.error('Error writing to file:', err);
+					return;
+				}
+				console.log('JSON data has been saved to', filePath);
+			});
 		}
 
 		if (code === 0 && args['--pretty-json'] && global.finalResults) {
