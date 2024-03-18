@@ -44,7 +44,7 @@
 					console.error('Error writing to file:', err);
 					return;
 				}
-				console.log('JSON data has been saved to', filePath);
+				console.log('JSON data has been saved to', args['--output']);
 			});
 		}
 
