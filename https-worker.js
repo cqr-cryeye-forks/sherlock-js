@@ -1,4 +1,5 @@
 async function test(url, name) {
+	console.log(name, url)
 	return new Promise((resolve, reject) => {
 		require((url.protocol === 'https:') ? 'https' : 'http').get(url, res => {
 			if (res.statusCode === 301 && res.headers.location) {
